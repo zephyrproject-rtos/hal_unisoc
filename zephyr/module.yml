@@ -1,0 +1,3 @@
+build:
+  cmake: uwp5
+  kconfig: uwp5/Kconfig
