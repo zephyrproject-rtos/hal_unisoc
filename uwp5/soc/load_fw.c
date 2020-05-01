@@ -169,7 +169,7 @@ int cp_check_running(void)
 		if (value & (1 << CP_RUNNING_BIT)) {
 			return 0;
 		}
-		k_sleep(30);
+		k_sleep(K_MSEC(30));
 	} while (cnt-- > 0);
 
 	return -1;
@@ -205,7 +205,7 @@ static void cp_sram_init(void)
 	val = sys_read32(0x40130004); /* enable */
 	val |= 0x220;
 	sys_write32(val, 0x40130004);
-	k_sleep(50);
+	k_sleep(K_MSEC(50));
 
 	val = sys_read32(0x4083c088); /* power on WRAP */
 	val &= ~(0x2);
