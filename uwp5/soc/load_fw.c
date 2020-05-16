@@ -8,6 +8,7 @@
 LOG_MODULE_DECLARE(LOG_MODULE_NAME);
 
 #include <zephyr.h>
+#include <storage/flash_map.h>
 #include <string.h>
 #include <uwp_hal.h>
 
@@ -27,8 +28,8 @@ LOG_MODULE_DECLARE(LOG_MODULE_NAME);
 #define CP_START_ADDR_OFFSET	16
 
 #define CP_START_ADDR_CONTAINER	0x0200D000
-#define CP_START_MODEM0_ADDR	(0x02000000 + DT_FLASH_AREA_MODEM_0_OFFSET)
-#define CP_START_MODEM1_ADDR	(0x02000000 + DT_FLASH_AREA_MODEM_1_OFFSET)
+#define CP_START_MODEM0_ADDR	(0x02000000 + FLASH_AREA_OFFSET(modem_0))
+#define CP_START_MODEM1_ADDR	(0x02000000 + FLASH_AREA_OFFSET(modem_1))
 
 extern void GNSS_Start(void);
 
