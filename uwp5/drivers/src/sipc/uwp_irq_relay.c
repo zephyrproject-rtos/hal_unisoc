@@ -34,40 +34,40 @@ LOG_MODULE_DECLARE(LOG_MODULE_NAME);
 
 #define CEVA_IP_INT_CLEAR_ADDR (0x40246000+0x28)
 #define CEVA_IP_int_clear(clear_bit) { int temp = \
-	*((volatile u32_t *)CEVA_IP_INT_CLEAR_ADDR); \
-	temp |= clear_bit; *((volatile u32_t *)CEVA_IP_INT_CLEAR_ADDR) = temp; }
+	*((volatile uint32_t *)CEVA_IP_INT_CLEAR_ADDR); \
+	temp |= clear_bit; *((volatile uint32_t *)CEVA_IP_INT_CLEAR_ADDR) = temp; }
 
 #define CEVA_IP_int_MASK(bit) {int temp = \
-	*((volatile u32_t *)CEVA_IP_INT_CLEAR_ADDR); \
-	temp |= bit; *((volatile u32_t *)CEVA_IP_INT_CLEAR_ADDR) = temp; }
+	*((volatile uint32_t *)CEVA_IP_INT_CLEAR_ADDR); \
+	temp |= bit; *((volatile uint32_t *)CEVA_IP_INT_CLEAR_ADDR) = temp; }
 #define CEVA_IP_int_UNMASK(bit) {int temp = \
-	*((volatile u32_t *)CEVA_IP_INT_CLEAR_ADDR); \
-	temp &= ~bit; *((volatile u32_t *)CEVA_IP_INT_CLEAR_ADDR) = temp; }
+	*((volatile uint32_t *)CEVA_IP_INT_CLEAR_ADDR); \
+	temp &= ~bit; *((volatile uint32_t *)CEVA_IP_INT_CLEAR_ADDR) = temp; }
 
 
 #define HW_DEC_INT_CLEAR (0x40240000+0x304)
 #define HW_DEC_INT1_CLEAR (0x40240000+0x308)
 
 #define HW_DEC_int_clear(clear_bit) \
-{unsigned int temp = *((volatile u32_t *)HW_DEC_INT_CLEAR); \
+{unsigned int temp = *((volatile uint32_t *)HW_DEC_INT_CLEAR); \
 	temp |= clear_bit; \
-	*((volatile u32_t *)HW_DEC_INT_CLEAR) = temp; \
+	*((volatile uint32_t *)HW_DEC_INT_CLEAR) = temp; \
 	temp &= ~clear_bit; \
-	*((volatile u32_t *)HW_DEC_INT_CLEAR) = temp; }
+	*((volatile uint32_t *)HW_DEC_INT_CLEAR) = temp; }
 
 #define HW_DEC_int_clear_sts \
 {	unsigned int temp1; \
-	unsigned int temp = *((volatile u32_t *)HW_DEC_INT_CLEAR); \
+	unsigned int temp = *((volatile uint32_t *)HW_DEC_INT_CLEAR); \
 	temp1 = (temp >> 16)&0xff; \
-	*((volatile u32_t *)HW_DEC_INT_CLEAR) = temp | temp1; \
-	*((volatile u32_t *)HW_DEC_INT_CLEAR) = temp&(~0xff); }
+	*((volatile uint32_t *)HW_DEC_INT_CLEAR) = temp | temp1; \
+	*((volatile uint32_t *)HW_DEC_INT_CLEAR) = temp&(~0xff); }
 
 #define HW_DEC_int1_clear_sts \
 {	unsigned int temp1; \
-	unsigned int temp = *((volatile u32_t *)HW_DEC_INT1_CLEAR); \
+	unsigned int temp = *((volatile uint32_t *)HW_DEC_INT1_CLEAR); \
 	temp1 = (temp >> 16)&0xff; \
-	*((volatile u32_t *)HW_DEC_INT1_CLEAR) = temp | temp1; \
-	*((volatile u32_t *)HW_DEC_INT1_CLEAR) = temp&(~0xff); }
+	*((volatile uint32_t *)HW_DEC_INT1_CLEAR) = temp | temp1; \
+	*((volatile uint32_t *)HW_DEC_INT1_CLEAR) = temp&(~0xff); }
 
 #define  PKD_INTR_MASK          (1<<4)
 #define  AUX_TMR_INTR_MASK      (1<<5)
@@ -92,69 +92,69 @@ LOG_MODULE_DECLARE(LOG_MODULE_NAME);
 #define ATOR_INTR2        (1<<2)
 
 #define SHARE_MEM_WATCH   (0x1EEF00)
-u16_t clear_bt_int(int irq_num)
+uint16_t clear_bt_int(int irq_num)
 {
-	u16_t tem=0;
+	uint16_t tem=0;
 	switch (irq_num) {
 	case NVIC_BT_MASKED_TIM_INTR0:
-		*((u16_t *)(SHARE_MEM_WATCH+0x0c)) += 1;
-		tem = *((u16_t *)(SHARE_MEM_WATCH+0x0c));
+		*((uint16_t *)(SHARE_MEM_WATCH+0x0c)) += 1;
+		tem = *((uint16_t *)(SHARE_MEM_WATCH+0x0c));
 		CEVA_IP_int_clear(TIM_INTRO_CLR); break;
 	case NVIC_BT_MASKED_TIM_INTR1:
-		*((u16_t *)(SHARE_MEM_WATCH+0x10)) += 1;
-		tem = *((u16_t *)(SHARE_MEM_WATCH+0x10));
+		*((uint16_t *)(SHARE_MEM_WATCH+0x10)) += 1;
+		tem = *((uint16_t *)(SHARE_MEM_WATCH+0x10));
 		CEVA_IP_int_clear(TIM_INTR1_CLR); break;
 	case NVIC_BT_MASKED_TIM_INTR2:
-		*((u16_t *)(SHARE_MEM_WATCH+0x14)) += 1;
-		tem = *((u16_t *)(SHARE_MEM_WATCH+0x14));
+		*((uint16_t *)(SHARE_MEM_WATCH+0x14)) += 1;
+		tem = *((uint16_t *)(SHARE_MEM_WATCH+0x14));
 		CEVA_IP_int_clear(TIM_INTR2_CLR); break;
 	case NVIC_BT_MASKED_TIM_INTR3:
-		*((u16_t *)(SHARE_MEM_WATCH+0x18)) += 1;
-		tem = *((u16_t *)(SHARE_MEM_WATCH+0x18));
+		*((uint16_t *)(SHARE_MEM_WATCH+0x18)) += 1;
+		tem = *((uint16_t *)(SHARE_MEM_WATCH+0x18));
 		CEVA_IP_int_clear(TIM_INTR3_CLR); break;
 	case NVIC_BT_MASKED_AUX_TMR_INTR:
-		*((u16_t *)(SHARE_MEM_WATCH+0x24)) += 1;
-		tem = *((u16_t *)(SHARE_MEM_WATCH+0x24));
+		*((uint16_t *)(SHARE_MEM_WATCH+0x24)) += 1;
+		tem = *((uint16_t *)(SHARE_MEM_WATCH+0x24));
 		CEVA_IP_int_clear(AUX_TMR_INTR); break;
 	case NVIC_BT_MASKED_PKA_INTR:
-		*((u16_t *)(SHARE_MEM_WATCH+0x20)) += 1;
-		tem = *((u16_t *)(SHARE_MEM_WATCH+0x20));
+		*((uint16_t *)(SHARE_MEM_WATCH+0x20)) += 1;
+		tem = *((uint16_t *)(SHARE_MEM_WATCH+0x20));
 		CEVA_IP_int_clear(PKA_INTR); break;
 	case NVIC_BT_MASKED_SYNC_DET_INTR:
-		*((u16_t *)(SHARE_MEM_WATCH+0x04)) += 1;
-		tem = *((u16_t *)(SHARE_MEM_WATCH+0x04));
+		*((uint16_t *)(SHARE_MEM_WATCH+0x04)) += 1;
+		tem = *((uint16_t *)(SHARE_MEM_WATCH+0x04));
 		CEVA_IP_int_clear(SYNC_DET_INTR); break;
 	case NVIC_BT_MASKED_PKD_RX_HDR:
-		*((u16_t *)(SHARE_MEM_WATCH+0x08)) += 1;
-		tem = *((u16_t *)(SHARE_MEM_WATCH+0x08));
+		*((uint16_t *)(SHARE_MEM_WATCH+0x08)) += 1;
+		tem = *((uint16_t *)(SHARE_MEM_WATCH+0x08));
 		CEVA_IP_int_clear(PKD_RX_HDR); break;
 	case NVIC_BT_MASKED_PKD_INTR:
-		*((u16_t *)(SHARE_MEM_WATCH+0x1c)) += 1;
-		tem =  *((u16_t *)(SHARE_MEM_WATCH+0x1c));
+		*((uint16_t *)(SHARE_MEM_WATCH+0x1c)) += 1;
+		tem =  *((uint16_t *)(SHARE_MEM_WATCH+0x1c));
 		CEVA_IP_int_clear(PKD_INTR); break;
 	case NVIC_BT_MASKED_PAGE_TIMEOUT_INTR:
-		*((u16_t *)(SHARE_MEM_WATCH+0)) += 1;
-		tem = *((u16_t *)(SHARE_MEM_WATCH+0));
+		*((uint16_t *)(SHARE_MEM_WATCH+0)) += 1;
+		tem = *((uint16_t *)(SHARE_MEM_WATCH+0));
 		CEVA_IP_int_MASK(PKD_NO_PKD_INTR_MASK); break;
 	case NVIC_BT_ACCELERATOR_INTR0:
-		*((u16_t *)(SHARE_MEM_WATCH+0x28)) += 1;
-		tem = *((u16_t *)(SHARE_MEM_WATCH+0x28));
+		*((uint16_t *)(SHARE_MEM_WATCH+0x28)) += 1;
+		tem = *((uint16_t *)(SHARE_MEM_WATCH+0x28));
 		HW_DEC_int_clear(ATOR_INTR0); break;
 	case NVIC_BT_ACCELERATOR_INTR1:
-		*((u16_t *)(SHARE_MEM_WATCH+0x2c)) += 1;
-		tem = *((u16_t *)(SHARE_MEM_WATCH+0x2c));
+		*((uint16_t *)(SHARE_MEM_WATCH+0x2c)) += 1;
+		tem = *((uint16_t *)(SHARE_MEM_WATCH+0x2c));
 		HW_DEC_int_clear(ATOR_INTR1); break;
 	case NVIC_BT_ACCELERATOR_INTR2:
-		*((u16_t *)(SHARE_MEM_WATCH+0x30)) += 1;
-		tem = *((u16_t *)(SHARE_MEM_WATCH+0x30));
+		*((uint16_t *)(SHARE_MEM_WATCH+0x30)) += 1;
+		tem = *((uint16_t *)(SHARE_MEM_WATCH+0x30));
 		HW_DEC_int_clear(ATOR_INTR2); break;
 	case NVIC_BT_ACCELERATOR_INTR3:
-		*((u16_t *)(SHARE_MEM_WATCH+0x34)) += 1;
-		tem = *((u16_t *)(SHARE_MEM_WATCH+0x34));
+		*((uint16_t *)(SHARE_MEM_WATCH+0x34)) += 1;
+		tem = *((uint16_t *)(SHARE_MEM_WATCH+0x34));
 		HW_DEC_int_clear_sts; break;
 	case NVIC_BT_ACCELERATOR_INTR4:
-		*((u16_t *)(SHARE_MEM_WATCH+0x38)) += 1;
-		tem = *((u16_t *)(SHARE_MEM_WATCH+0x38));
+		*((uint16_t *)(SHARE_MEM_WATCH+0x38)) += 1;
+		tem = *((uint16_t *)(SHARE_MEM_WATCH+0x38));
 		HW_DEC_int1_clear_sts; break;
 
     default:
@@ -210,7 +210,7 @@ static int bt_irq_handler(void *arg)
 {
 	struct smsg msg;
 	s32_t irq = (s32_t)arg;
-	u16_t tem;
+	uint16_t tem;
 	tem = clear_bt_int(irq);
 	smsg_set(&msg, SMSG_CH_IRQ_DIS, SMSG_TYPE_EVENT, tem, irq);
 	smsg_send_irq(SIPC_ID_AP, &msg);
@@ -270,7 +270,7 @@ int sprd_bt_irq_init(void)
 	return 0;
 }
 
-void sprd_wifi_irq_enable_num(u32_t num)
+void sprd_wifi_irq_enable_num(uint32_t num)
 {
 	LOG_INF("wifi irq enable %d\n", num);
 
@@ -287,7 +287,7 @@ void sprd_wifi_irq_enable_num(u32_t num)
 
 }
 
-void sprd_wifi_irq_disable_num(u32_t num)
+void sprd_wifi_irq_disable_num(uint32_t num)
 {
 	LOG_INF("wifi irq enable %d\n", num);
 	switch (num) {

@@ -16,7 +16,7 @@ LOG_MODULE_DECLARE(LOG_MODULE_NAME);
 #include "sipc.h"
 #include "sipc_priv.h"
 
-extern int smsg_init(u32_t dst, u32_t smsg_base);
+extern int smsg_init(uint32_t dst, uint32_t smsg_base);
 static int sipc_init(struct device *arg)
 {
 	int ret;

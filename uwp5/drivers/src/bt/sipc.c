@@ -128,18 +128,18 @@ void sipc_test()
 {
 }
 
-static void bt_spi_handle_vendor_evt(u8_t *rxmsg)
+static void bt_spi_handle_vendor_evt(uint8_t *rxmsg)
 {
 
 }
 
 
-static u8_t adv_cache[50] = {0};
+static uint8_t adv_cache[50] = {0};
 #define ADV_RECV_TIMEOUT K_SECONDS(1)
 static struct net_buf *alloc_adv_buf(unsigned char *src)
 {
 	struct net_buf *buf = NULL;
-	u8_t length = src[EVT_ADV_LENGTH];
+	uint8_t length = src[EVT_ADV_LENGTH];
 
 	if (!memcmp(adv_cache, src + EVT_ADV_LENGTH, length + 1)) {
 		//BTD("dropped surplus adv");
@@ -187,7 +187,7 @@ static void tx_thread(void)
 static void rx_thread(void)
 {
 	int ret;
-	u32_t left_length;
+	uint32_t left_length;
 	struct net_buf *buf;
 	unsigned char *rxmsg = NULL;
 	struct bt_hci_acl_hdr acl_hdr;

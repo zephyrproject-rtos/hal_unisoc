@@ -55,7 +55,7 @@ static struct smsg_ipc smsg_ipcs[SIPC_ID_NR];
 #define SMSG_RXBUF_WRPTR	(SMSG_RINGHDR + 44)
 
 void sipc_init_smsg_queue_buf(struct smsg_queue_buf *buf,
-		u32_t size, u32_t addr, u32_t rdptr, u32_t wrptr)
+		uint32_t size, uint32_t addr, uint32_t rdptr, uint32_t wrptr)
 {
 	buf->size = size / sizeof(struct smsg);
 	buf->addr = addr;
@@ -63,7 +63,7 @@ void sipc_init_smsg_queue_buf(struct smsg_queue_buf *buf,
 	buf->wrptr = wrptr;
 }
 
-static struct smsg_ipc *smsg_set_addr(struct smsg_ipc *ipc, u32_t base)
+static struct smsg_ipc *smsg_set_addr(struct smsg_ipc *ipc, uint32_t base)
 {
 	sipc_init_smsg_queue_buf(&ipc->queue[QUEUE_PRIO_IRQ].tx_buf,
 			SMSG_IRQ_TXBUF_SIZE,
@@ -192,7 +192,7 @@ int smsg_msg_dispatch_thread(int argc, char *argv[])
 
 }
 
-int smsg_ipc_destroy(u8_t dst)
+int smsg_ipc_destroy(uint8_t dst)
 {
 	struct smsg_ipc *ipc = &smsg_ipcs[dst];
 
@@ -201,7 +201,7 @@ int smsg_ipc_destroy(u8_t dst)
 	return 0;
 }
 
-int smsg_ch_open(u8_t dst, u8_t channel, int prio, int timeout)
+int smsg_ch_open(uint8_t dst, uint8_t channel, int prio, int timeout)
 {
 	struct smsg_ipc *ipc = &smsg_ipcs[dst];
 	struct smsg_channel *ch;
@@ -241,7 +241,7 @@ int smsg_ch_open(u8_t dst, u8_t channel, int prio, int timeout)
 	return 0;
 }
 
-int smsg_ch_close(u8_t dst, u8_t channel, int prio, int timeout)
+int smsg_ch_close(uint8_t dst, uint8_t channel, int prio, int timeout)
 {
 	struct smsg_ipc *ipc = &smsg_ipcs[dst];
 	struct smsg_channel *ch = &ipc->channels[channel];
@@ -258,7 +258,7 @@ int smsg_ch_close(u8_t dst, u8_t channel, int prio, int timeout)
 	return 0;
 }
 
-int smsg_send_irq(u8_t dst, struct smsg *msg)
+int smsg_send_irq(uint8_t dst, struct smsg *msg)
 {
 	struct smsg_ipc *ipc = &smsg_ipcs[dst];
 	struct smsg_queue_buf *tx_buf;
@@ -297,12 +297,12 @@ send_failed:
 	return ret;
 }
 
-int smsg_send(u8_t dst, u8_t prio, struct smsg *msg, int timeout)
+int smsg_send(uint8_t dst, uint8_t prio, struct smsg *msg, int timeout)
 {
 	struct smsg_channel *ch;
 	struct smsg_queue_buf *tx_buf;
 	struct smsg_ipc *ipc = &smsg_ipcs[dst];
-	u32_t txpos;
+	uint32_t txpos;
 	int ret = 0;
 
 	ch = &ipc->channels[msg->channel];
@@ -370,7 +370,7 @@ static void smsg_irq_handler(void *arg)
 	irq_enable(NVIC_INT_GNSS2BTWF_IPI);
 }
 
-int smsg_init(u32_t dst, u32_t smsg_base)
+int smsg_init(uint32_t dst, uint32_t smsg_base)
 {
 	struct smsg_ipc *ipc = &smsg_ipcs[dst];
 

@@ -33,7 +33,7 @@ static CACHE_BLOCK_OP_T C_DCACHE_DEFAULT_BLOCK_CFG[] = {
 	{ BLOCK_7, 0x04900000, FALSE, FALSE },
 };
 
-static u32_t icache_bus_cfg_addr[] = {
+static uint32_t icache_bus_cfg_addr[] = {
 	REG_ICACHE_BUS_CFG0,
 	REG_ICACHE_BUS_CFG1,
 	REG_ICACHE_BUS_CFG2,
@@ -44,7 +44,7 @@ static u32_t icache_bus_cfg_addr[] = {
 	REG_ICACHE_BUS_CFG7,
 };
 
-static u32_t dcache_bus_cfg_addr[] = {
+static uint32_t dcache_bus_cfg_addr[] = {
 	REG_DCACHE_BUS_CFG0,
 	REG_DCACHE_BUS_CFG1,
 	REG_DCACHE_BUS_CFG2,
@@ -55,7 +55,7 @@ static u32_t dcache_bus_cfg_addr[] = {
 	REG_DCACHE_BUS_CFG7,
 };
 
-static u32_t icache_bus_remap_addr[] = {
+static uint32_t icache_bus_remap_addr[] = {
 	REG_ICACHE_BUS_REMAP0,
 	REG_ICACHE_BUS_REMAP1,
 	REG_ICACHE_BUS_REMAP2,
@@ -66,7 +66,7 @@ static u32_t icache_bus_remap_addr[] = {
 	REG_ICACHE_BUS_REMAP7,
 };
 
-static u32_t dcache_bus_remap_addr[] = {
+static uint32_t dcache_bus_remap_addr[] = {
 	REG_DCACHE_BUS_REMAP0,
 	REG_DCACHE_BUS_REMAP1,
 	REG_DCACHE_BUS_REMAP2,
@@ -77,10 +77,10 @@ static u32_t dcache_bus_remap_addr[] = {
 	REG_DCACHE_BUS_REMAP7,
 };
 
-u32_t *cache_bus_cfg_addr = &dcache_bus_cfg_addr[0];
-u32_t *cache_bus_remap_addr = &dcache_bus_remap_addr[0];
+uint32_t *cache_bus_cfg_addr = &dcache_bus_cfg_addr[0];
+uint32_t *cache_bus_remap_addr = &dcache_bus_remap_addr[0];
 CACHE_BLOCK_OP_T *block_cfg = NULL;
-u32_t CACHE_BUS_STS0, CACHE_CFG0, CACHE_CMD_CFG0,
+uint32_t CACHE_BUS_STS0, CACHE_CFG0, CACHE_CMD_CFG0,
       CACHE_CMD_CFG1, CACHE_CMD_CFG2, CACHE_INT_CLR,
       CACHE_INT_RAW_STS, CACHE_INT_EN, CACHE_INT_MSK_STS,
       CACHE_WRITE_MISS_CNT, CACHE_WRITE_HIT_CNT, CACHE_READ_MISS_CNT,
@@ -111,7 +111,7 @@ void icache_disable_block(CACHE_BLOCK_E block_num)
 
 void dcache_enable_block(CACHE_BLOCK_E block_num)
 {
-	u32_t t = 0;
+	uint32_t t = 0;
 
 	sci_write32(REG_DCACHE_CMD_CFG0, block_cfg[block_num].start);
 	sci_write32(REG_DCACHE_CMD_CFG1, block_cfg[block_num + 1].start);
@@ -128,7 +128,7 @@ void dcache_enable_block(CACHE_BLOCK_E block_num)
 
 void dcache_disable_block(CACHE_BLOCK_E block_num)
 {
-	u32_t t = 0;
+	uint32_t t = 0;
 
 	sci_write32(REG_DCACHE_CMD_CFG0,
 			C_DCACHE_DEFAULT_BLOCK_CFG[block_num].start);
@@ -147,23 +147,23 @@ void dcache_disable_block(CACHE_BLOCK_E block_num)
 
 }
 
-static inline void cache_cmd_entry(u32_t addr)
+static inline void cache_cmd_entry(uint32_t addr)
 {
 	sci_write32(CACHE_CMD_CFG0, addr & CACHE_STR_ADDR_MASK);
 }
 
-static inline void cache_cmd_range(u32_t start, u32_t end)
+static inline void cache_cmd_range(uint32_t start, uint32_t end)
 {
 	sci_write32(CACHE_CMD_CFG0, start & CACHE_STR_ADDR_MASK);
 	sci_write32(CACHE_CMD_CFG1, end & CACHE_END_ADDR_MASK);
 }
 
-u32_t cache_check(CACHE_CMD_T *cmd)
+uint32_t cache_check(CACHE_CMD_T *cmd)
 {
-	u32_t ret = 0;
-	u32_t size = BLOCK_MAX;
-	u32_t area_masked = C_AREA_MASK & cmd->type;
-	u32_t cache_op_masked = C_OP_MASK & cmd->type;
+	uint32_t ret = 0;
+	uint32_t size = BLOCK_MAX;
+	uint32_t area_masked = C_AREA_MASK & cmd->type;
+	uint32_t cache_op_masked = C_OP_MASK & cmd->type;
 
 	switch (area_masked) {
 	case C_ALLAREA:
@@ -230,10 +230,10 @@ u32_t cache_check(CACHE_CMD_T *cmd)
 	return ret;
 }
 
-u32_t cache_execmd(CACHE_CMD_T *cmd, u32_t force)
+uint32_t cache_execmd(CACHE_CMD_T *cmd, uint32_t force)
 {
-	u32_t value = CACHE_CMD_ISSUE_START;
-	u32_t ret = 0;
+	uint32_t value = CACHE_CMD_ISSUE_START;
+	uint32_t ret = 0;
 
 
 	if (!force) {
@@ -297,9 +297,9 @@ u32_t cache_execmd(CACHE_CMD_T *cmd, u32_t force)
 	return ret;
 }
 
-u32_t cache_enableblock(CACHE_BLOCK_OP_T *pblock, cache_op op)
+uint32_t cache_enableblock(CACHE_BLOCK_OP_T *pblock, cache_op op)
 {
-	u32_t enable_bit = pblock->id - (u32_t) (BLOCK_0);
+	uint32_t enable_bit = pblock->id - (uint32_t) (BLOCK_0);
 
 	if (C_WRITE == op) {
 		if (pblock->en_cache) {
@@ -328,9 +328,9 @@ u32_t cache_enableblock(CACHE_BLOCK_OP_T *pblock, cache_op op)
 	}
 }
 
-u32_t cache_protblock(CACHE_BLOCK_OP_T *pblock, cache_op op)
+uint32_t cache_protblock(CACHE_BLOCK_OP_T *pblock, cache_op op)
 {
-	u32_t enable_bit = pblock->id - (u32_t) (BLOCK_0) +16;
+	uint32_t enable_bit = pblock->id - (uint32_t) (BLOCK_0) +16;
 
 	if (C_WRITE == op) {
 		if (pblock->en_prot) {
@@ -355,7 +355,7 @@ void cache_configaddr(CACHE_BLOCK_OP_T *pblock)
 		return;
 	}
 	pblock->start = pblock->start & BLOCK_1_START_ADDR_MASK;
-	sci_write32(cache_bus_cfg_addr[pblock->id - (u32_t) BLOCK_0],
+	sci_write32(cache_bus_cfg_addr[pblock->id - (uint32_t) BLOCK_0],
 			pblock->start);
 }
 
@@ -366,9 +366,9 @@ void cache_size_sel(CACHE_SIZE_SEL_E cache_size)
 		 & CACHE_SIZE_SEL_MASK, CACHE_CFG0);
 }
 
-u32_t cache_execmd_invalid_clean_all(CACHE_CMD_T *cmd, u32_t force)
+uint32_t cache_execmd_invalid_clean_all(CACHE_CMD_T *cmd, uint32_t force)
 {
-	u32_t value = CACHE_CMD_ISSUE_START;
+	uint32_t value = CACHE_CMD_ISSUE_START;
 
 	set_bits(CACHE_CMD_IRQ_CLR, CACHE_INT_CLR);
 	if (C_CLEAN_ALL == cmd->type) {
@@ -451,7 +451,7 @@ void dcache_set_reg(void)
 	block_cfg = &C_DCACHE_DEFAULT_BLOCK_CFG[0];
 }
 
-void cache_execusecfg(CACHE_BLOCK_OP_T *pcfg, u32_t size)
+void cache_execusecfg(CACHE_BLOCK_OP_T *pcfg, uint32_t size)
 {
 	int32_t i;
 
@@ -549,7 +549,7 @@ void cache_invalid_range_hal(uint8_t *begin, uint32_t data_len)
 
 void icache_phy_init(CACHE_SIZE_SEL_E icache_size)
 {
-	u32_t i;
+	uint32_t i;
 	CACHE_CMD_T cmd;
 
 	cmd.type = C_INVALID_ALL;
@@ -566,7 +566,7 @@ void icache_phy_init(CACHE_SIZE_SEL_E icache_size)
 
 void dcache_phy_init(CACHE_SIZE_SEL_E dcache_size)
 {
-	u32_t i;
+	uint32_t i;
 	CACHE_CMD_T cmd;
 
 	cmd.type = C_INVALID_ALL;

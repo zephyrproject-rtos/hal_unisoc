@@ -270,46 +270,46 @@ typedef enum lock_pattern {
 } LOCK_PATTERN_E;
 
 struct spi_flash_lock_desc {
-	u8_t reg2_value;
-	u8_t reg1_value;
+	uint8_t reg2_value;
+	uint8_t reg1_value;
 
-	u8_t lock_pattern;
+	uint8_t lock_pattern;
 };
 
 struct spi_flash_lock_pattern {
-	u8_t lock_pattern;
+	uint8_t lock_pattern;
 
-	u32_t start_addr;
-	u32_t size;
+	uint32_t start_addr;
+	uint32_t size;
 };
 
-void spiflash_cmd_read(struct spi_flash *flash, const u8_t * cmd,
-		       u32_t cmd_len, u32_t address, const void *data_in,
-		       u32_t data_len);
-void spiflash_cmd_write(struct spi_flash *flash, const u8_t * cmd,
-			u32_t cmd_len, const void *data_out, u32_t data_len);
+void spiflash_cmd_read(struct spi_flash *flash, const uint8_t * cmd,
+		       uint32_t cmd_len, uint32_t address, const void *data_in,
+		       uint32_t data_len);
+void spiflash_cmd_write(struct spi_flash *flash, const uint8_t * cmd,
+			uint32_t cmd_len, const void *data_out, uint32_t data_len);
 #define SR_QE		(1 << 9)
 #define SR_LOCK		(0)
 #define SR_UNLOCK	(0)
 
-LOCK_PATTERN_E spiflash_get_lock_pattern(u32_t start_addr, u32_t size,
+LOCK_PATTERN_E spiflash_get_lock_pattern(uint32_t start_addr, uint32_t size,
 					 const struct spi_flash_lock_desc
-					 *lock_table, u32_t lock_table_size);
-BYTE_NUM_E spi_flash_addr(u32_t * addr, u32_t support_4addr);
+					 *lock_table, uint32_t lock_table_size);
+BYTE_NUM_E spi_flash_addr(uint32_t * addr, uint32_t support_4addr);
 __ramfunc int spiflash_cmd_poll_bit(struct spi_flash *flash,
-	unsigned long timeout, u8_t cmd, u32_t poll_bit, u32_t bit_value);
+	unsigned long timeout, uint8_t cmd, uint32_t poll_bit, uint32_t bit_value);
 int spiflash_cmd_wait_ready(struct spi_flash *flash, unsigned long timeout);
-int spiflash_cmd_erase(struct spi_flash *flash, u8_t erase_cmd, u32_t offset);
-int spiflash_cmd_program(struct spi_flash *flash, u32_t offset, u32_t len,
-			 const void *buf, u8_t cmd);
-int spiflash_cmd_spi_read(struct spi_flash *flash, u8_t cmd_read,
-			  u8_t dummy_bytes);
-int spiflash_cmd_qpi_read(struct spi_flash *flash, u8_t cmd_read,
-			  u8_t dummy_bytes);
+int spiflash_cmd_erase(struct spi_flash *flash, uint8_t erase_cmd, uint32_t offset);
+int spiflash_cmd_program(struct spi_flash *flash, uint32_t offset, uint32_t len,
+			 const void *buf, uint8_t cmd);
+int spiflash_cmd_spi_read(struct spi_flash *flash, uint8_t cmd_read,
+			  uint8_t dummy_bytes);
+int spiflash_cmd_qpi_read(struct spi_flash *flash, uint8_t cmd_read,
+			  uint8_t dummy_bytes);
 
 int spiflash_write_enable(struct spi_flash *flash);
 int spiflash_write_disable(struct spi_flash *flash);
-int spiflash_write(struct spi_flash *flash, u32_t offset, u32_t len,
+int spiflash_write(struct spi_flash *flash, uint32_t offset, uint32_t len,
 		   const void *buf);
 int spiflash_erase_chip(struct spi_flash *flash);
 int spiflash_suspend(struct spi_flash *flash);
@@ -320,21 +320,21 @@ __ramfunc int spiflash_reset_anyway(void);
 int spiflash_init(void);
 struct spi_flash *flash_ctr(void);
 
-//void spi_read(SFC_CMD_DES_T * cmd_des_ptr, u32_t cmd_len, u32_t * din);
-//void spi_write(SFC_CMD_DES_T * cmd_des_ptr, u32_t cmd_len);
+//void spi_read(SFC_CMD_DES_T * cmd_des_ptr, uint32_t cmd_len, uint32_t * din);
+//void spi_write(SFC_CMD_DES_T * cmd_des_ptr, uint32_t cmd_len);
 void spi_write_cmd(struct spi_flash *flash, const void *cmd,
 		   unsigned int cmd_len);
-void spi_data_read(struct spi_flash *flash, const u8_t * cmd,
-		   u32_t cmd_len, u32_t address, const void *data_in,
-		   u32_t data_len);
+void spi_data_read(struct spi_flash *flash, const uint8_t * cmd,
+		   uint32_t cmd_len, uint32_t address, const void *data_in,
+		   uint32_t data_len);
 void spi_write_data(struct spi_flash *flash, const void *data_out,
-		    u32_t data_len);
-void spi_read_data(struct spi_flash *flash, void *data_in, u32_t data_len);
-__ramfunc void create_cmd(SFC_CMD_DES_T *cmd_desc_ptr, u32_t cmd,
-		u32_t byte_len, CMD_MODE_E cmd_mode,
+		    uint32_t data_len);
+void spi_read_data(struct spi_flash *flash, void *data_in, uint32_t data_len);
+__ramfunc void create_cmd(SFC_CMD_DES_T *cmd_desc_ptr, uint32_t cmd,
+		uint32_t byte_len, CMD_MODE_E cmd_mode,
 		BIT_MODE_E bit_mode, SEND_MODE_E send_mode);
 __ramfunc void spiflash_set_xip_cmd(struct spi_flash *flash,
-		const u8_t *cmd_read, u8_t dummy_bytes);
+		const uint8_t *cmd_read, uint8_t dummy_bytes);
 
 
 #ifdef __cplusplus

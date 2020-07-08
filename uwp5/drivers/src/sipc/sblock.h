@@ -78,27 +78,27 @@ extern "C" {
 #define BT_RX_BLOCK_NUM   5
 
 struct sblock_blks {
-	u32_t		addr; /*phy address*/
-	u32_t		length;
+	uint32_t		addr; /*phy address*/
+	uint32_t		length;
 };
 
 /* ring block header */
 struct sblock_ring_header {
 	/* get|send-block info */
-	u32_t		txblk_addr;
-	u32_t		txblk_count;
-	u32_t		txblk_size;
-	u32_t		txblk_blks;
-	u32_t		txblk_rdptr;
-	u32_t		txblk_wrptr;
+	uint32_t		txblk_addr;
+	uint32_t		txblk_count;
+	uint32_t		txblk_size;
+	uint32_t		txblk_blks;
+	uint32_t		txblk_rdptr;
+	uint32_t		txblk_wrptr;
 
 	/* release|recv-block info */
-	u32_t		rxblk_addr;
-	u32_t		rxblk_count;
-	u32_t		rxblk_size;
-	u32_t		rxblk_blks;
-	u32_t		rxblk_rdptr;
-	u32_t		rxblk_wrptr;
+	uint32_t		rxblk_addr;
+	uint32_t		rxblk_count;
+	uint32_t		rxblk_size;
+	uint32_t		rxblk_blks;
+	uint32_t		rxblk_rdptr;
+	uint32_t		rxblk_wrptr;
 };
 
 struct sblock_header {
@@ -126,18 +126,18 @@ struct sblock_ring {
 };
 
 struct sblock_mgr {
-	u8_t			dst;
-	u8_t			channel;
-	u32_t		state;
+	uint8_t			dst;
+	uint8_t			channel;
+	uint32_t		state;
 
 	void			*smem_virt;
-	u32_t		smem_addr;
-	u32_t		smem_size;
+	uint32_t		smem_addr;
+	uint32_t		smem_size;
 
-	u32_t		txblksz;
-	u32_t		rxblksz;
-	u32_t		txblknum;
-	u32_t		rxblknum;
+	uint32_t		txblksz;
+	uint32_t		rxblksz;
+	uint32_t		txblknum;
+	uint32_t		rxblknum;
 
 	struct sblock_ring	ring;
 
@@ -153,33 +153,33 @@ struct sblock_mgr {
 
 #define SBLOCK_ALIGN_BYTES (4)
 
-static inline u32_t sblock_get_index(u32_t x, u32_t y)
+static inline uint32_t sblock_get_index(uint32_t x, uint32_t y)
 {
 	return (x / y);
 }
 
-static inline u32_t sblock_get_ringpos(u32_t x, u32_t y)
+static inline uint32_t sblock_get_ringpos(uint32_t x, uint32_t y)
 {
 	return is_power_of_2(y) ? (x & (y - 1)) : (x % y);
 }
 
-int sblock_create(u8_t dst, u8_t channel,
-		u32_t txblocknum, u32_t txblocksize,
-		u32_t rxblocknum, u32_t rxblocksize);
-int sblock_release(u8_t dst, u8_t channel, struct sblock *blk);
-int sblock_get_free_count(u8_t dst, u8_t channel);
-int sblock_get_arrived_count(u8_t dst, u8_t channel);
-int sblock_receive(u8_t dst, u8_t channel, struct sblock *blk, int timeout);
-int sblock_send_finish(u8_t dst, u8_t channel);
-int sblock_send(u8_t dst, u8_t channel, u8_t prio, struct sblock *blk);
-int sblock_send_prepare(u8_t dst, u8_t channel, u8_t prio, struct sblock *blk);
-int sblock_get(u8_t dst, u8_t channel, struct sblock *blk, int timeout);
-void sblock_put(u8_t dst, u8_t channel, struct sblock *blk);
-int sblock_register_notifier(u8_t dst, u8_t channel,
+int sblock_create(uint8_t dst, uint8_t channel,
+		uint32_t txblocknum, uint32_t txblocksize,
+		uint32_t rxblocknum, uint32_t rxblocksize);
+int sblock_release(uint8_t dst, uint8_t channel, struct sblock *blk);
+int sblock_get_free_count(uint8_t dst, uint8_t channel);
+int sblock_get_arrived_count(uint8_t dst, uint8_t channel);
+int sblock_receive(uint8_t dst, uint8_t channel, struct sblock *blk, int timeout);
+int sblock_send_finish(uint8_t dst, uint8_t channel);
+int sblock_send(uint8_t dst, uint8_t channel, uint8_t prio, struct sblock *blk);
+int sblock_send_prepare(uint8_t dst, uint8_t channel, uint8_t prio, struct sblock *blk);
+int sblock_get(uint8_t dst, uint8_t channel, struct sblock *blk, int timeout);
+void sblock_put(uint8_t dst, uint8_t channel, struct sblock *blk);
+int sblock_register_notifier(uint8_t dst, uint8_t channel,
 		void (*handler)(int event, void *data), void *data);
-int sblock_register_callback(u8_t channel,
+int sblock_register_callback(uint8_t channel,
 		void (*callback)(int ch));
-int sblock_unregister_callback(u8_t channel);
-int sblock_state(u8_t channel);
+int sblock_unregister_callback(uint8_t channel);
+int sblock_state(uint8_t channel);
 
 #endif

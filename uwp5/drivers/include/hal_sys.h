@@ -94,24 +94,24 @@ extern "C" {
 	};
 
 	struct uwp_sys {
-		u32_t rst;
-		u32_t mcu_soft_rst;
-		u32_t rstn_index;
-		u32_t sys_soft_rst;
-		u32_t eb;
-		u32_t eb1;
+		uint32_t rst;
+		uint32_t mcu_soft_rst;
+		uint32_t rstn_index;
+		uint32_t sys_soft_rst;
+		uint32_t eb;
+		uint32_t eb1;
 	};
 
-	static inline void uwp_sys_enable(u32_t bits) {
+	static inline void uwp_sys_enable(uint32_t bits) {
 		sci_glb_set(REG_APB_EB, bits);
 	}
 
-	static inline void uwp_sys_disable(u32_t bits) {
+	static inline void uwp_sys_disable(uint32_t bits) {
 		sci_glb_clr(REG_APB_EB, bits);
 	}
 
-	static inline void uwp_sys_reset(u32_t bits) {
-		u32_t wait = 50;
+	static inline void uwp_sys_reset(uint32_t bits) {
+		uint32_t wait = 50;
 
 		sci_glb_set(REG_APB_RST, bits);
 		while(wait--){}

@@ -378,7 +378,7 @@ extern "C" {
 		volatile SFC_TYPE_BUF2_U type_buf2;
 	} SFC_REG_T;
 
-#define SFC_REG_NUM         (sizeof(SFC_REG_T)/sizeof(u32_t))
+#define SFC_REG_NUM         (sizeof(SFC_REG_T)/sizeof(uint32_t))
 
 #define SFC_CLK_OUT_DIV_1			(0x0)
 #define SFC_CLK_OUT_DIV_2			BIT(0)
@@ -453,44 +453,44 @@ extern "C" {
 #define SPI_CMD_DATA_END        0x02
 
 	typedef struct _sfc_cmd_des {
-		u32_t cmd;
-		u32_t cmd_byte_len;
-		u32_t is_valid;
+		uint32_t cmd;
+		uint32_t cmd_byte_len;
+		uint32_t is_valid;
 		CMD_MODE_E cmd_mode;
 		BIT_MODE_E bit_mode;
 		SEND_MODE_E send_mode;
 	} SFC_CMD_DES_T, *SFC_CMD_DES_PTR;
 
-	void sfcdrv_setcmdencryptcfgreg(u32_t cmdmode);
+	void sfcdrv_setcmdencryptcfgreg(uint32_t cmdmode);
 	void sfcdrv_setcmdcfgreg(CMD_MODE_E cmdmode, BIT_MODE_E bitmode,
 			INI_ADD_SEL_E iniAddSel);
 	void sfcdrv_softreq(void);
 	void sfcdrv_cmd_bufclr(void);
 	void sfcdrv_typebufclr(void);
 	void sfcdrv_intclr(void);
-	u32_t sfcdrv_getstatus(void);
-	void sfcdrv_cstimingcfg(u32_t value);
-	void sfcdrv_rdtimingcfg(u32_t value);
-	void sfcdrv_clkcfg(u32_t value);
-	void sfcdrv_cscfg(u32_t value);
-	void sfcdrv_endiancfg(u32_t value);
-	void sfcdrv_setcmdbuf(CMD_BUF_INDEX_E index, u32_t value);
+	uint32_t sfcdrv_getstatus(void);
+	void sfcdrv_cstimingcfg(uint32_t value);
+	void sfcdrv_rdtimingcfg(uint32_t value);
+	void sfcdrv_clkcfg(uint32_t value);
+	void sfcdrv_cscfg(uint32_t value);
+	void sfcdrv_endiancfg(uint32_t value);
+	void sfcdrv_setcmdbuf(CMD_BUF_INDEX_E index, uint32_t value);
 	void sfcdrv_setcmdbufex(CMD_BUF_INDEX_E index,
-		const u8_t *buf, u32_t count);
-	u32_t sfcdrv_getcmdbuf(CMD_BUF_INDEX_E index);
+		const uint8_t *buf, uint32_t count);
+	uint32_t sfcdrv_getcmdbuf(CMD_BUF_INDEX_E index);
 	__ramfunc void sfcdrv_settypeinfbuf(CMD_BUF_INDEX_E index,
 			BIT_MODE_E bitmode,
 			BYTE_NUM_E bytenum, CMD_MODE_E cmdmode,
 			SEND_MODE_E sendmode);
 	__ramfunc void sfcdrv_resetallbuf(void);
 	__ramfunc void sfcdrv_setreadbuf(SFC_CMD_DES_T *cmd_des_ptr,
-			u32_t cmd_flag);
+			uint32_t cmd_flag);
 	__ramfunc void sfcdrv_setcmddata(SFC_CMD_DES_T *cmd_des_ptr,
-			u32_t cmd_flag);
-	__ramfunc void sfcdrv_getreadbuf(u32_t *buffer, u32_t word_cnt);
-	void sfcdrv_getbuf(void *buffer, u32_t nbytes);
-	__ramfunc void sfcdrv_intcfg(u32_t op);
-	__ramfunc void sfcdrv_clkcfg(u32_t value);
+			uint32_t cmd_flag);
+	__ramfunc void sfcdrv_getreadbuf(uint32_t *buffer, uint32_t word_cnt);
+	void sfcdrv_getbuf(void *buffer, uint32_t nbytes);
+	__ramfunc void sfcdrv_intcfg(uint32_t op);
+	__ramfunc void sfcdrv_clkcfg(uint32_t value);
 	__ramfunc void sfcdrv_req(void);
 
 #ifdef __cplusplus

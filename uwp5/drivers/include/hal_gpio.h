@@ -26,55 +26,55 @@ extern "C" {
 #define GPIO_TRIGGER_LOW_EDGE		5
 
 	struct uwp_gpio {
-		u32_t data;		/* data */
-		u32_t mask;		/* data mask */
-		u32_t dir;		/* data direction */
-		u32_t is;		/* interrupt sense */
-		u32_t ibe;		/* both edges interrup */
-		u32_t iev;		/* interrupt event */
-		u32_t ie;		/* interrupt enable */
-		u32_t ris;		/* raw interrupt status */
-		u32_t mis;		/* mask interrupt status */
-		u32_t ic;		/* interrupt clear */
-		u32_t inen;		/* input enable */
+		uint32_t data;		/* data */
+		uint32_t mask;		/* data mask */
+		uint32_t dir;		/* data direction */
+		uint32_t is;		/* interrupt sense */
+		uint32_t ibe;		/* both edges interrup */
+		uint32_t iev;		/* interrupt event */
+		uint32_t ie;		/* interrupt enable */
+		uint32_t ris;		/* raw interrupt status */
+		uint32_t mis;		/* mask interrupt status */
+		uint32_t ic;		/* interrupt clear */
+		uint32_t inen;		/* input enable */
 	};
 
 #define UWP_GPIO(base) (volatile struct uwp_gpio *)base
 
-	static inline void uwp_gpio_enable(u32_t base,
-			u32_t pin_map)
+	static inline void uwp_gpio_enable(uint32_t base,
+			uint32_t pin_map)
 	{
 		volatile struct uwp_gpio *gpio = UWP_GPIO(base);
 
 		gpio->mask |= pin_map;
 	}
 
-	static inline void uwp_gpio_disable(u32_t base,
-			u32_t pin_map)
+	static inline void uwp_gpio_disable(uint32_t base,
+			uint32_t pin_map)
 	{
 		volatile struct uwp_gpio *gpio = UWP_GPIO(base);
 
 		gpio->mask &= (~pin_map);
 	}
 
-	static inline void uwp_gpio_input_enable(u32_t base,
-			u32_t pin_map)
+	static inline void uwp_gpio_input_enable(uint32_t base,
+			uint32_t pin_map)
 	{
 		volatile struct uwp_gpio *gpio = UWP_GPIO(base);
 
 		gpio->inen |= pin_map;
 	}
 
-	static inline void uwp_gpio_input_disable(u32_t base,
-			u32_t pin_map)
+	static inline void uwp_gpio_input_disable(uint32_t base,
+			uint32_t pin_map)
 	{
 		volatile struct uwp_gpio *gpio = UWP_GPIO(base);
 
 		gpio->inen &= (~pin_map);
 	}
 
-	static inline void uwp_gpio_write(u32_t base,
-			u32_t pin_map, u32_t pin_value)
+	static inline void uwp_gpio_write(uint32_t base,
+			uint32_t pin_map, uint32_t pin_value)
 	{
 		volatile struct uwp_gpio *gpio = UWP_GPIO(base);
 
@@ -84,16 +84,16 @@ extern "C" {
 			gpio->data &= (~pin_map);
 	}
 
-	static inline u32_t uwp_gpio_read(u32_t base,
-			u32_t pin)
+	static inline uint32_t uwp_gpio_read(uint32_t base,
+			uint32_t pin)
 	{
 		volatile struct uwp_gpio *gpio = UWP_GPIO(base);
 
 		return (gpio->data & pin);
 	}
 
-	static inline void uwp_gpio_set_dir(u32_t base,
-			u32_t pin_map, u32_t dir)
+	static inline void uwp_gpio_set_dir(uint32_t base,
+			uint32_t pin_map, uint32_t dir)
 	{
 		volatile struct uwp_gpio *gpio = UWP_GPIO(base);
 
@@ -103,8 +103,8 @@ extern "C" {
 			gpio->dir &= (~pin_map);
 	}
 
-	static inline void uwp_gpio_int_set_type(u32_t base,
-			u32_t pin_map, u32_t type)
+	static inline void uwp_gpio_int_set_type(uint32_t base,
+			uint32_t pin_map, uint32_t type)
 	{
 		volatile struct uwp_gpio *gpio = UWP_GPIO(base);
 
@@ -131,31 +131,31 @@ extern "C" {
 
 	}
 
-	static inline void uwp_gpio_int_enable(u32_t base,
-			u32_t pin_map)
+	static inline void uwp_gpio_int_enable(uint32_t base,
+			uint32_t pin_map)
 	{
 		volatile struct uwp_gpio *gpio = UWP_GPIO(base);
 
 		gpio->ie |= pin_map;
 	}
 
-	static inline void uwp_gpio_int_disable(u32_t base,
-			u32_t pin_map)
+	static inline void uwp_gpio_int_disable(uint32_t base,
+			uint32_t pin_map)
 	{
 		volatile struct uwp_gpio *gpio = UWP_GPIO(base);
 
 		gpio->ie &= (~pin_map);
 	}
 
-	static inline void uwp_gpio_int_clear(u32_t base,
-			u32_t pin_map)
+	static inline void uwp_gpio_int_clear(uint32_t base,
+			uint32_t pin_map)
 	{
 		volatile struct uwp_gpio *gpio = UWP_GPIO(base);
 
 		gpio->ic |= pin_map;
 	}
 
-	static inline u32_t uwp_gpio_int_status(u32_t base, u32_t bmask)
+	static inline uint32_t uwp_gpio_int_status(uint32_t base, uint32_t bmask)
 	{
 		volatile struct uwp_gpio *gpio = UWP_GPIO(base);
 

@@ -70,7 +70,7 @@ static inline void set_stack_log_level(int level) {
 
 void uki_hex_dump_block(char *tag, unsigned char *bin, size_t binsz);
 void uki_hex(char *dst, unsigned char *src, size_t binsz);
-void uki_str2hex(u8_t *dst, u8_t *src, size_t size);
+void uki_str2hex(uint8_t *dst, uint8_t *src, size_t size);
 void uki_hexdump(char *tag, unsigned char *bin, size_t binsz);
 void uki_hex_dump_block_ex(unsigned char type, char *tag, unsigned char *bin, size_t binsz);
 
