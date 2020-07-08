@@ -21,20 +21,20 @@ extern "C" {
 		struct k_mutex		rxlock;
 		struct k_mutex		txlock;
 
-		u32_t refs;
-		u32_t state;
+		uint32_t refs;
+		uint32_t state;
 
 		/* cached msgs for recv */
-		u32_t			wrptr;
-		u32_t			rdptr;
+		uint32_t			wrptr;
+		uint32_t			rdptr;
 		struct smsg		caches[SMSG_CACHE_NR];
 	};
 
 	struct smsg_queue_buf {
-		u32_t			addr;
-		u32_t			size;	/* must be 2^n */
-		u32_t			rdptr;
-		u32_t			wrptr;
+		uint32_t			addr;
+		uint32_t			size;	/* must be 2^n */
+		uint32_t			rdptr;
+		uint32_t			wrptr;
 	};
 
 	struct smsg_queue {
@@ -47,8 +47,8 @@ extern "C" {
 		/* smsg ring-buffer between AP/CP ipc */
 	struct smsg_ipc {
 		char			*name;
-		u8_t			dst;
-		u8_t			padding[3];
+		uint8_t			dst;
+		uint8_t			padding[3];
 
 		struct smsg_queue   queue[QUEUE_PRIO_MAX];
 
@@ -60,7 +60,7 @@ extern "C" {
 		/* sipc irq related */
 		int			irq;
 
-		u32_t		(*rxirq_status)(void);
+		uint32_t		(*rxirq_status)(void);
 		void		(*rxirq_clear)(void);
 		void		(*txirq_trigger)(void);
 
@@ -69,7 +69,7 @@ extern "C" {
 		k_tid_t			 pid;
 		struct k_sem    irq_sem;
 		/* lock for send-buffer */
-		u32_t            txpinlock;
+		uint32_t            txpinlock;
 		/* all fixed channels receivers */
 		struct smsg_channel	channels[SMSG_CH_NR];
 	};
@@ -80,12 +80,12 @@ extern "C" {
 #define CHAN_STATE_FREE		3
 
 	/* create/destroy smsg ipc between AP/CP */
-	struct smsg_ipc *smsg_ipc_create(u8_t dst);
-	int smsg_ipc_destroy(u8_t dst);
+	struct smsg_ipc *smsg_ipc_create(uint8_t dst);
+	int smsg_ipc_destroy(uint8_t dst);
 	int  smsg_suspend_init(void);
 
 	/* initialize smem pool for AP/CP */
-	int smem_init(u32_t addr, u32_t size);
+	int smem_init(uint32_t addr, uint32_t size);
 
 #ifdef __cplusplus
 }

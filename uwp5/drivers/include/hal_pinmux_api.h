@@ -15,8 +15,8 @@ extern "C"
 #include "uwp_hal.h"
 
 struct pm_pinfunc_tag {
-	u32_t addr;
-	u32_t value;
+	uint32_t addr;
+	uint32_t value;
 };
 
 int uwp_pinmux_init(struct device *dev);

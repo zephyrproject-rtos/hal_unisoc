@@ -70,11 +70,11 @@ void uki_hex_dump_block(char *tag, unsigned char *bin, size_t binsz)
 		uki_hexdump(tag, bin + i * HEX_DUMP_BLOCK_SIZE, tail);
 }
 
-void uki_str2hex(u8_t *dst, u8_t *src, size_t size)
+void uki_str2hex(uint8_t *dst, uint8_t *src, size_t size)
 {
     int len;
     int i, j;
-    u8_t c;
+    uint8_t c;
 
     len = strlen(src);
     if (len > size * 2) {

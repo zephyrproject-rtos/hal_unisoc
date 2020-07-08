@@ -237,7 +237,7 @@ int get_pskey_buf(void *buf)
 void set_mac_address(uint8_t *addr)
 {
     uint8_t default_addr[6] = {0x00, 0x00, 0x00, 0xDA, 0x45, 0x40};
-    u32_t random;
+    uint32_t random;
 
     if(0 == memcmp(bt_info.address, default_addr,sizeof(default_addr))) {
         random =sys_rand32_get();

@@ -30,35 +30,35 @@ extern "C" {
 
 #define EIC_MAX_NUM				(3)
 
-	static u32_t eic_base[3] = {
+	static uint32_t eic_base[3] = {
 		BASE_EIC0,
 		BASE_EIC1,
 		BASE_AON_EIC0,
 	};
 
-	static inline void uwp_hal_eic_enable(u32_t num, u32_t channel)
+	static inline void uwp_hal_eic_enable(uint32_t num, uint32_t channel)
 	{
 		sci_reg_or(eic_base[num] + EIC_LATCH_INTEN, BIT(channel));
 	}
 
-	static inline void uwp_hal_eic_disable(u32_t num, u32_t channel)
+	static inline void uwp_hal_eic_disable(uint32_t num, uint32_t channel)
 	{
 		sci_reg_and(eic_base[num] + EIC_LATCH_INTEN, ~BIT(channel));
 	}
 
-	static inline void uwp_hal_eic_enable_sleep(u32_t num, u32_t channel)
+	static inline void uwp_hal_eic_enable_sleep(uint32_t num, uint32_t channel)
 	{
 		sci_reg_and(eic_base[num] + EIC_LATCH_INTMODE, ~BIT(channel));
 	}
 
-	static inline void uwp_hal_eic_disable_sleep(u32_t num, u32_t channel)
+	static inline void uwp_hal_eic_disable_sleep(uint32_t num, uint32_t channel)
 	{
 		sci_reg_or(eic_base[num] + EIC_LATCH_INTMODE, BIT(channel));
 	}
 
-	static inline u32_t uwp_hal_eic_status(u32_t num, u32_t channel)
+	static inline uint32_t uwp_hal_eic_status(uint32_t num, uint32_t channel)
 	{
-		u32_t reg;
+		uint32_t reg;
 
 		//reg = sci_read32(REG_EIC0_LATCH_INTRAW);
 		reg = sci_read32(eic_base[num] + EIC_LATCH_INTMSK);
@@ -66,15 +66,15 @@ extern "C" {
 		return (reg >> channel) & 0x1;
 	}
 
-	static inline void uwp_hal_eic_clear(u32_t num, u32_t channel)
+	static inline void uwp_hal_eic_clear(uint32_t num, uint32_t channel)
 	{
 		sci_write32(eic_base[num] + EIC_LATCH_INTCLR, BIT(channel));
 	}
 
-	static inline void uwp_hal_eic_set_trigger(u32_t num,
-			u32_t channel, u32_t type)
+	static inline void uwp_hal_eic_set_trigger(uint32_t num,
+			uint32_t channel, uint32_t type)
 	{
-		u32_t reg;
+		uint32_t reg;
 
 		reg = sci_read32(eic_base[num] + EIC_LATCH_INTPOL);
 

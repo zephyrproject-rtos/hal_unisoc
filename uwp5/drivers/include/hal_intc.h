@@ -42,27 +42,27 @@ extern "C" {
 #define AON_INT_UART	12
 
 	struct uwp_intc {
-		u32_t mask_sts;
-		u32_t raw_sts;
-		u32_t enable;
-		u32_t disable;
-		u32_t irq_soft;
-		u32_t test_src;
-		u32_t test_sel;
-		u32_t reserved;
+		uint32_t mask_sts;
+		uint32_t raw_sts;
+		uint32_t enable;
+		uint32_t disable;
+		uint32_t irq_soft;
+		uint32_t test_src;
+		uint32_t test_sel;
+		uint32_t reserved;
 	};
 
-	static inline void uwp_intc_enable(volatile struct uwp_intc *intc, u32_t ch)
+	static inline void uwp_intc_enable(volatile struct uwp_intc *intc, uint32_t ch)
 	{
 		intc->enable |= BIT(ch);
 	}
 
-	static inline void uwp_intc_disable(volatile struct uwp_intc *intc, u32_t ch)
+	static inline void uwp_intc_disable(volatile struct uwp_intc *intc, uint32_t ch)
 	{
 		intc->disable |= BIT(ch);
 	}
 
-	static inline u32_t uwp_intc_status(volatile struct uwp_intc *intc)
+	static inline uint32_t uwp_intc_status(volatile struct uwp_intc *intc)
 	{
 		return intc->mask_sts;
 	}

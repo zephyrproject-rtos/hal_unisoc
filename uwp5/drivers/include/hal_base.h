@@ -49,14 +49,14 @@ extern "C" {
 #define __REG_SET_ADDR(reg)		(reg + 0x1000)
 #define __REG_CLR_ADDR(reg)		(reg + 0x2000)
 
-__ramfunc static u32_t sci_read32(mem_addr_t addr)
+__ramfunc static uint32_t sci_read32(mem_addr_t addr)
 {
-	return *(volatile u32_t *)addr;
+	return *(volatile uint32_t *)addr;
 }
 
-__ramfunc static void sci_write32(mem_addr_t addr, u32_t data)
+__ramfunc static void sci_write32(mem_addr_t addr, uint32_t data)
 {
-	*(volatile u32_t *)addr = data;
+	*(volatile uint32_t *)addr = data;
 }
 
 #define sci_reg_and(reg, val) \

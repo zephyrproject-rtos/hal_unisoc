@@ -32,10 +32,10 @@ extern "C" {
 
 	/* share-mem ring buffer short message */
 	struct smsg {
-		u8_t		channel;	/* channel index */
-		u8_t		type;		/* msg type */
-		u16_t		flag;		/* msg flag */
-		u32_t		value;		/* msg value */
+		uint8_t		channel;	/* channel index */
+		uint8_t		type;		/* msg type */
+		uint16_t		flag;		/* msg flag */
+		uint32_t		value;		/* msg value */
 	};
 
 	/* smsg channel definition */
@@ -101,7 +101,7 @@ extern "C" {
  * @timeout: milliseconds, 0 means no wait, -1 means unlimited
  * @return: 0 on success, <0 on failure
  */
-int smsg_ch_open(u8_t dst, u8_t channel, int prio, int timeout);
+int smsg_ch_open(uint8_t dst, uint8_t channel, int prio, int timeout);
 
 /**
  * smsg_ch_close -- close a channel for smsg
@@ -111,7 +111,7 @@ int smsg_ch_open(u8_t dst, u8_t channel, int prio, int timeout);
  * @timeout: milliseconds, 0 means no wait, -1 means unlimited
  * @return: 0 on success, <0 on failure
  */
-int smsg_ch_close(u8_t dst, u8_t channel, int prio, int timeout);
+int smsg_ch_close(uint8_t dst, uint8_t channel, int prio, int timeout);
 
 /**
  * smsg_send -- send smsg
@@ -121,8 +121,8 @@ int smsg_ch_close(u8_t dst, u8_t channel, int prio, int timeout);
  * @timeout: milliseconds, 0 means no wait, -1 means unlimited
  * @return: 0 on success, <0 on failure
  */
-int smsg_send(u8_t dst, u8_t prio, struct smsg *msg, int timeout);
-int smsg_send_irq(u8_t dst, struct smsg *msg);
+int smsg_send(uint8_t dst, uint8_t prio, struct smsg *msg, int timeout);
+int smsg_send_irq(uint8_t dst, struct smsg *msg);
 /**
  * smsg_recv -- poll and recv smsg
  *
@@ -131,13 +131,13 @@ int smsg_send_irq(u8_t dst, struct smsg *msg);
  * @timeout: milliseconds, 0 means no wait, -1 means unlimited
  * @return: 0 on success, <0 on failure
  */
-int smsg_recv(u8_t dst, struct smsg *msg, int timeout);
+int smsg_recv(uint8_t dst, struct smsg *msg, int timeout);
 
 void wakeup_smsg_task_all(struct k_sem *sem);
 
 /* quickly fill a smsg body */
-static inline void smsg_set(struct smsg *msg, u8_t channel,
-		u8_t type, uint16_t flag, u32_t value)
+static inline void smsg_set(struct smsg *msg, uint8_t channel,
+		uint8_t type, uint16_t flag, uint32_t value)
 {
 	msg->channel = channel;
 	msg->type = type;
@@ -146,7 +146,7 @@ static inline void smsg_set(struct smsg *msg, u8_t channel,
 }
 
 /* ack an open msg for modem recovery */
-static inline void smsg_open_ack(u8_t dst, uint16_t channel)
+static inline void smsg_open_ack(uint8_t dst, uint16_t channel)
 {
 	struct smsg mopen;
 
@@ -155,7 +155,7 @@ static inline void smsg_open_ack(u8_t dst, uint16_t channel)
 }
 
 /* ack an close msg for modem recovery */
-static inline void smsg_close_ack(u8_t dst, uint16_t channel)
+static inline void smsg_close_ack(uint8_t dst, uint16_t channel)
 {
 	struct smsg mclose;
 
@@ -167,10 +167,10 @@ static inline void smsg_close_ack(u8_t dst, uint16_t channel)
 /* sblock structure: addr is the uncached virtual address */
 struct sblock {
 	void		*addr;
-	u32_t	length;
+	uint32_t	length;
 #ifdef CONFIG_ZERO_COPY_SIPX
-	u16_t        index;
-	u16_t        offset;
+	uint16_t        index;
+	uint16_t        offset;
 #endif
 };
 
@@ -182,8 +182,8 @@ struct sblock {
 
 extern int sipc_probe(void);
 extern int wifi_irq_init(void);
-extern void sprd_wifi_irq_disable_num(u32_t num);
-extern void sprd_wifi_irq_enable_num(u32_t num);
+extern void sprd_wifi_irq_disable_num(uint32_t num);
+extern void sprd_wifi_irq_enable_num(uint32_t num);
 
 #ifdef __cplusplus
 }

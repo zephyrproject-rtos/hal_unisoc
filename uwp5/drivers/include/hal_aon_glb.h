@@ -149,15 +149,15 @@ extern "C" {
 		CLK_416M   = 0x0,
 	} CLK_ARM_SEL_E;
 
-	static inline void uwp_aon_enable(u32_t bits) {
+	static inline void uwp_aon_enable(uint32_t bits) {
 		sci_glb_set(REG_AON_GLB_EB, bits);
 	}
 
-	static inline void uwp_aon_disable(u32_t bits) {
+	static inline void uwp_aon_disable(uint32_t bits) {
 		sci_glb_clr(REG_AON_GLB_EB, bits);
 	}
 
-	static inline void uwp_aon_reset(u32_t bits) {
+	static inline void uwp_aon_reset(uint32_t bits) {
 		int i = 50;
 
 		sci_glb_set(REG_AON_RST, bits);

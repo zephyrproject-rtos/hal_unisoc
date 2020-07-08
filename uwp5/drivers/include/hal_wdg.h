@@ -51,19 +51,19 @@ extern "C" {
 #define WDG_IRQ_MSK_BIT BIT(0)
 
 	struct uwp_wdg {
-		u32_t load_low;
-		u32_t load_high;
-		u32_t ctrl;
-		u32_t int_clr;
-		u32_t int_raw;
-		u32_t int_mask;
-		u32_t cnt_low;
-		u32_t cnt_high;
-		u32_t lock;
-		u32_t cnt_rd_low;
-		u32_t cnt_rd_high;
-		u32_t irq_val_low;
-		u32_t irq_val_high;
+		uint32_t load_low;
+		uint32_t load_high;
+		uint32_t ctrl;
+		uint32_t int_clr;
+		uint32_t int_raw;
+		uint32_t int_mask;
+		uint32_t cnt_low;
+		uint32_t cnt_high;
+		uint32_t lock;
+		uint32_t cnt_rd_low;
+		uint32_t cnt_rd_high;
+		uint32_t irq_val_low;
+		uint32_t irq_val_high;
 	};
 
 	static inline void uwp_wdg_lock(void)
@@ -76,9 +76,9 @@ extern "C" {
 		sci_write32(REG_WDG_LOCK, WDG_UNLOCK_KEY);
 	}
 
-	static inline void uwp_wdg_set_mode(u32_t mode)
+	static inline void uwp_wdg_set_mode(uint32_t mode)
 	{
-		u32_t mode_bitmap;
+		uint32_t mode_bitmap;
 
 		switch (mode){
 			case WDG_MODE_RESET:
@@ -106,10 +106,10 @@ extern "C" {
 		uwp_wdg_lock();
 	}
 
-	static inline void uwp_wdg_load(u32_t value)
+	static inline void uwp_wdg_load(uint32_t value)
 	{
 #ifndef WDG_NEWMODE
-		u32_t cnt = 0;
+		uint32_t cnt = 0;
 #endif
 		value = value * 32768 / 1000;
 		uwp_wdg_unlock();
@@ -123,10 +123,10 @@ extern "C" {
 		uwp_wdg_lock();
 	}
 
-	static inline void uwp_wdg_load_irq(u32_t value)
+	static inline void uwp_wdg_load_irq(uint32_t value)
 	{
 #ifndef WDG_NEWMODE
-		u32_t cnt = 0;
+		uint32_t cnt = 0;
 #endif
 		uwp_wdg_unlock();
 		value = value * 32768 / 1000;
@@ -167,9 +167,9 @@ extern "C" {
 		uwp_wdg_lock();
 	}
 
-	static inline u32_t uwp_wdg_get_counter(void)
+	static inline uint32_t uwp_wdg_get_counter(void)
 	{
-		u32_t value = 0;
+		uint32_t value = 0;
 
 		uwp_wdg_unlock();
 

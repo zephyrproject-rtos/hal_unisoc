@@ -414,15 +414,15 @@ typedef enum {
 
 #define DELAY(time)									 \
 	do {										 \
-		u32_t delay_time;							 \
+		uint32_t delay_time;							 \
 		for (delay_time = 0; delay_time < (time * RF_SYS_CLK * 2); delay_time++) \
 		{}									 \
 	} while (0)
 
 typedef struct {
-	u32_t divn;
-	u32_t divfrach;
-	u32_t divfracl;
+	uint32_t divn;
+	uint32_t divfrach;
+	uint32_t divfracl;
 } LO_FREQ_STRC;
 #define RF_LO_FREQ_TABLE_CRYSTAL_OFFSET     5
 const LO_FREQ_STRC g_RF_LO_FREQ[10] =
@@ -440,9 +440,9 @@ const LO_FREQ_STRC g_RF_LO_FREQ[10] =
 	{ 0x52, 0x5, 0xD70A }
 };
 
-void RF_readCtlReg(u32_t addr, u32_t *data)
+void RF_readCtlReg(uint32_t addr, uint32_t *data)
 {
-	u32_t reg_data = 0;
+	uint32_t reg_data = 0;
 
 	reg_data = ((addr & 0x7FFF) << 16) | 0x80000000;
 	sci_write32(RF_CTL_MASTER_BASE, reg_data);
@@ -453,9 +453,9 @@ void RF_readCtlReg(u32_t addr, u32_t *data)
 	DELAY(1);
 }
 
-void RF_writeCtlReg(u32_t addr, u32_t data)
+void RF_writeCtlReg(uint32_t addr, uint32_t data)
 {
-	u32_t reg_data = 0;
+	uint32_t reg_data = 0;
 
 	reg_data = ((addr & 0X7FFF) << 16) | (data & 0xFFFF);
 	sci_write32(RF_CTL_MASTER_BASE, reg_data);
@@ -472,7 +472,7 @@ void RF_softReset(void)
 
 void RF_setInterface(void)
 {
-	u32_t sel;
+	uint32_t sel;
 
 	sel = 1;
 
@@ -485,16 +485,16 @@ void RF_setInterface(void)
 
 void RF_setSWCtrlFSMState(void)
 {
-	u32_t data;
+	uint32_t data;
 
 	RF_readCtlReg(GE_MODE_MUX, &data);
 	data &= ~GE_MODE_CTRL_SEL;
 	RF_writeCtlReg(GE_MODE_MUX, data);
 }
 
-void RF_switchState(u32_t state)
+void RF_switchState(uint32_t state)
 {
-	u32_t data;
+	uint32_t data;
 
 	RF_readCtlReg(RF_HW_RST_CTRL0, &data);
 	data &= 0xFFFFE1FF;
@@ -504,7 +504,7 @@ void RF_switchState(u32_t state)
 
 void RF_setSXFreqDivRatio(LO_FREQ_STRC regs_cfg)
 {
-	u32_t data;
+	uint32_t data;
 
 	RF_readCtlReg(GE_SX_DIVN_CTRL0, &data);
 	data &= 0xFFFF00FF;
@@ -522,9 +522,9 @@ void RF_setSXFreqDivRatio(LO_FREQ_STRC regs_cfg)
 	RF_writeCtlReg(GE_SX_DIVNFRAC_CTRLL, data);
 }
 
-void RF_setGNSSMode(u32_t sys_indx)
+void RF_setGNSSMode(uint32_t sys_indx)
 {
-	u32_t data;
+	uint32_t data;
 
 	RF_readCtlReg(PS_GE_RX_CTRL3, &data);
 	data &= 0xFFFF1FFF;
@@ -533,9 +533,9 @@ void RF_setGNSSMode(u32_t sys_indx)
 
 }
 
-void RF_setADCclk(u32_t divRatio1, u32_t divRatio2)
+void RF_setADCclk(uint32_t divRatio1, uint32_t divRatio2)
 {
-	u32_t data;
+	uint32_t data;
 
 	RF_readCtlReg(PS_GE_CLK_GEN_CTRL1, &data);
 	data &= 0xffffc3ff;
@@ -559,9 +559,9 @@ void RF_setADCclk(u32_t divRatio1, u32_t divRatio2)
 	RF_writeCtlReg(GE_CLK_GATE_CTRL, data);
 }
 
-void RF_setPPclk(u32_t divRatio1, u32_t divRatio2)
+void RF_setPPclk(uint32_t divRatio1, uint32_t divRatio2)
 {
-	u32_t data;
+	uint32_t data;
 
 	RF_readCtlReg(PS_GE_CLK_GEN_CTRL2, &data);
 	data &= 0xfffff87f;
@@ -585,15 +585,15 @@ void RF_setPPclk(u32_t divRatio1, u32_t divRatio2)
 	RF_writeCtlReg(GE_CLK_GATE_CTRL, data);
 }
 
-void RF_setADCEnable(u32_t divRatio1, u32_t divRatio2)
+void RF_setADCEnable(uint32_t divRatio1, uint32_t divRatio2)
 {
 	RF_setADCclk(divRatio1, divRatio2);
 	APB_ADC_ENABLE();
 }
 
-void RF_setPGAGain(u32_t gain)
+void RF_setPGAGain(uint32_t gain)
 {
-	u32_t data;
+	uint32_t data;
 
 	RF_readCtlReg(GE_RX_GAIN_CTRL0, &data);
 	data &= 0xffff0fff;
@@ -601,9 +601,9 @@ void RF_setPGAGain(u32_t gain)
 	RF_writeCtlReg(GE_RX_GAIN_CTRL0, data);
 }
 
-void RF_Control(s16_t RF_Mode)
+void RF_Control(int16_t RF_Mode)
 {
-	u32_t data_tmp;
+	uint32_t data_tmp;
 
 	sci_reg_or(BIT_AON_APB_GNSS_RF_CTRL_GNSS_RF_CTRL_ADDR, BIT(1));
 
@@ -652,7 +652,7 @@ void RF_Control(s16_t RF_Mode)
 	APB_GNSS_POWER_ON();
 	DELAY(1);
 
-	u32_t gnss_pwron_finish_flag = 0;
+	uint32_t gnss_pwron_finish_flag = 0;
 	while (!gnss_pwron_finish_flag) {
 		gnss_pwron_finish_flag  = APB_GET_GNSS_POWERON_FINISH();
 		DELAY(1);
@@ -671,7 +671,7 @@ void RF_Control(s16_t RF_Mode)
 
 void RF_CFG(void)
 {
-	s16_t rf_mode = 0;
+	int16_t rf_mode = 0;
 
 	rf_mode = RF_GPS_BD_GLO_MODE;
 	RF_Control(rf_mode);
@@ -679,7 +679,7 @@ void RF_CFG(void)
 
 void BB_RESET(void)
 {
-	u32_t regValue = 0x0;
+	uint32_t regValue = 0x0;
 
 	regValue = sci_read32(SOFT_RST);
 	sci_write32(SOFT_RST, (regValue | 0x100000));

@@ -78,9 +78,9 @@ enum PINMUX_REG_UWP {
 	PCIE_WAKE_L,
 };
 
-static inline void __pin_enbable(u8_t enable)
+static inline void __pin_enbable(uint8_t enable)
 {
-	u32_t regval;
+	uint32_t regval;
 
 	regval  = sys_read32(REG_APB_EB);
 	if (enable) {
@@ -90,45 +90,45 @@ static inline void __pin_enbable(u8_t enable)
 	}
 }
 
-static inline void uwp_pmux_func_clear(u32_t pin)
+static inline void uwp_pmux_func_clear(uint32_t pin)
 {
-	u32_t pin_reg = PINMUX_PIN_REG(pin);
-	u32_t conf = sys_read32(pin_reg);
+	uint32_t pin_reg = PINMUX_PIN_REG(pin);
+	uint32_t conf = sys_read32(pin_reg);
 
 	conf &= (~(PMUX_PIN_FUNC(1)));
 	sys_write32(conf, pin_reg);
 }
 
-static inline void uwp_pmux_func_set(u32_t pin, u32_t func)
+static inline void uwp_pmux_func_set(uint32_t pin, uint32_t func)
 {
-	u32_t pin_reg = PINMUX_PIN_REG(pin);
-	u32_t conf = sys_read32(pin_reg);
+	uint32_t pin_reg = PINMUX_PIN_REG(pin);
+	uint32_t conf = sys_read32(pin_reg);
 
 	conf |= (PMUX_PIN_FUNC(func));
 	sys_write32(conf, pin_reg);
 }
 
-static inline void uwp_pmux_get(u32_t pin, u32_t *func)
+static inline void uwp_pmux_get(uint32_t pin, uint32_t *func)
 {
-	u32_t pin_reg = PINMUX_PIN_REG(pin);
-	u32_t conf = sys_read32(pin_reg);
+	uint32_t pin_reg = PINMUX_PIN_REG(pin);
+	uint32_t conf = sys_read32(pin_reg);
 
 	*func = conf;
 }
 
-static inline void uwp_pmux_pin_pullup(u32_t pin)
+static inline void uwp_pmux_pin_pullup(uint32_t pin)
 {
-	u32_t pin_reg = PINMUX_PIN_REG(pin);
-	u32_t conf = sys_read32(pin_reg);
+	uint32_t pin_reg = PINMUX_PIN_REG(pin);
+	uint32_t conf = sys_read32(pin_reg);
 
 	conf |= PIN_FPU_EN;
 	sys_write32(conf, pin_reg);
 }
 
-static inline void uwp_pmux_pin_pulldown(u32_t pin)
+static inline void uwp_pmux_pin_pulldown(uint32_t pin)
 {
-	u32_t pin_reg = PINMUX_PIN_REG(pin);
-	u32_t conf = sys_read32(pin_reg);
+	uint32_t pin_reg = PINMUX_PIN_REG(pin);
+	uint32_t conf = sys_read32(pin_reg);
 
 	conf |= PIN_FPD_EN;
 	sys_write32(conf, pin_reg);
